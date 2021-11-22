@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Badbook</title>
+</head>
+<body>
+<h1>Welcome to badbook</h1>
+<div sec:authorize="isAuthenticated()">
+    Welcome, <span sec:authentication="name"></span>
+    <hr>
+    <a th:href="@{/page/{id}(id=${currentUser.getId()})}">На мою страницу</a><br>
+    <a th:href="@{/page}">Все пользователи</a>
+</div>
+
+<div sec:authorize="isAnonymous()">
+    Welcome, anonymous
+    <hr>
+    <a href="/login">Login</a><br>
+    <a href="/registration">registration</a>
+</div>
+
+</body>
+</html>

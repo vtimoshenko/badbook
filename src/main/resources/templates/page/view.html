@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница пользователя</title>
+</head>
+<body>
+
+    <b th:text="${user.getName()}"></b> <b th:text="${user.getSurname()}"></b>
+    <hr>
+    Пол: <span th:text="${user.getSex()}">Sex</span> Возраст: <span th:text="${user.getAge()}">Age</span><br>
+    Город: <span th:text="${user.getCity()}">City</span><br>
+    Интересы: <span th:text="${user.getInterests()}">Interests</span><br>
+
+    <hr>
+
+    <h3>Друзья</h3>
+    <div th:each="friend : ${friends}">
+        <b th:text="${friend.getName()}"></b> <b th:text="${friend.getSurname()}"></b>
+        <br>
+        <span th:text="${friend.getSex()}"></span> <span th:text="${friend.getAge()}"></span>
+
+        <a th:href="@{/page/{id}(id=${friend.getId()})}">На страницу</a>
+        <a th:href="@{/page/toFriends/{id}(id=${friend.getId()})}">В друзья</a>
+    </div>
+
+    <hr>
+
+    <a th:href="@{/page/toFriends/{id}(id=${user.getId()})}">В друзья</a><br>
+    <a th:href="@{/page/{id}(id=${currentUser.getId()})}">На мою страницу</a><br>
+    <a th:href="@{/page}">Все пользователи</a>
+</body>
+</html>

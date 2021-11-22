@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+</head>
+<body>
+<h1>Все пользователи</h1>
+
+<div th:each="user : ${users}">
+    <b th:text="${user.getName()}"></b> <b th:text="${user.getSurname()}"></b>
+    <br>
+    <span th:text="${user.getSex()}"></span> <span th:text="${user.getAge()}"></span>
+
+    <a th:href="@{/page/{id}(id=${user.getId()})}">На страницу</a>
+    <a th:href="@{/page/toFriends/{id}(id=${user.getId()})}">В друзья</a>
+</div>
+<hr>
+<a th:href="@{/page/{id}(id=${currentUser.getId()})}">На мою страницу</a><br>
+<a th:href="@{/page}">Все пользователи</a>
+
+</body>
+</html>
