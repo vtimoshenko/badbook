@@ -1,6 +1,7 @@
 package rzd.pktb.tvs.badbook.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,17 +21,19 @@ import java.util.List;
 @Service
 public class UserDAO implements UserDetailsService {
 
+    private String table;
     private final JdbcTemplate jdbcTemplate;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserDAO(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserDAO(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder bCryptPasswordEncoder, @Value("${db.tables.users}") String table) {
         this.jdbcTemplate = jdbcTemplate;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.table = table;
     }
 
     public List<User> list() {
-        List<User> list = jdbcTemplate.query("SELECT * FROM badbook.users", new Object[]{},new int[]{}, new BeanPropertyRowMapper<>(User.class));
+        List<User> list = jdbcTemplate.query("SELECT * FROM " + table, new Object[]{},new int[]{}, new BeanPropertyRowMapper<>(User.class));
         return list;
     }
 
@@ -44,7 +47,7 @@ public class UserDAO implements UserDetailsService {
         int[] types = new int[flist.size()];
         Arrays.fill(types, Types.INTEGER);
 
-        List<User> list = jdbcTemplate.query(String.format("SELECT * FROM badbook.users where id in (%s)", inSQL),
+        List<User> list = jdbcTemplate.query(String.format("SELECT * FROM " + table + " where id in (%s)", inSQL),
                 ids,
                 types,
                 new BeanPropertyRowMapper<>(User.class));
@@ -53,7 +56,7 @@ public class UserDAO implements UserDetailsService {
     }
 
     public User get(int id) {
-        List<User> list = jdbcTemplate.query("SELECT * FROM badbook.users WHERE id=?", new Object[]{id},new int[]{Types.INTEGER}, new BeanPropertyRowMapper<>(User.class));
+        List<User> list = jdbcTemplate.query("SELECT * FROM " + table + " WHERE id=?", new Object[]{id},new int[]{Types.INTEGER}, new BeanPropertyRowMapper<>(User.class));
         return list.get(0);
     }
 
@@ -61,7 +64,7 @@ public class UserDAO implements UserDetailsService {
         if (existsUsername(user.getUsername()))
             return false;
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        jdbcTemplate.update("INSERT INTO badbook.users (" +
+        jdbcTemplate.update("INSERT INTO " + table + " (" +
                 "username, " +
                 "password," +
                 "name," +
@@ -83,7 +86,7 @@ public class UserDAO implements UserDetailsService {
     }
 
     public void update(int id, User user) {
-        jdbcTemplate.update("UPDATE badbook.users SET " +
+        jdbcTemplate.update("UPDATE " + table + " SET " +
                 "name=?, " +
                 "surname=?, " +
                 "age=?, " +
@@ -101,11 +104,11 @@ public class UserDAO implements UserDetailsService {
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM badbook.users WHERE id=?", id);
+        jdbcTemplate.update("DELETE FROM " + table + " WHERE id=?", id);
     }
 
     public boolean existsUsername(String username) {
-        List<User> list = jdbcTemplate.query("SELECT * FROM badbook.users WHERE username=?", new Object[]{username},new int[]{Types.VARCHAR}, new BeanPropertyRowMapper<>(User.class));
+        List<User> list = jdbcTemplate.query("SELECT * FROM " + table + " WHERE username=?", new Object[]{username},new int[]{Types.VARCHAR}, new BeanPropertyRowMapper<>(User.class));
         if (list.isEmpty())
             return false;
         else
@@ -114,7 +117,7 @@ public class UserDAO implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<User> list = jdbcTemplate.query("SELECT * FROM badbook.users WHERE username=?", new Object[]{username},new int[]{Types.VARCHAR}, new BeanPropertyRowMapper<>(User.class));
+        List<User> list = jdbcTemplate.query("SELECT * FROM " + table + " WHERE username=?", new Object[]{username},new int[]{Types.VARCHAR}, new BeanPropertyRowMapper<>(User.class));
         if (list.isEmpty())
             throw new UsernameNotFoundException(username);
         else

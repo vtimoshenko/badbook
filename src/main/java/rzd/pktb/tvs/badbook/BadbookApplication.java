@@ -1,6 +1,7 @@
 package rzd.pktb.tvs.badbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -22,12 +23,15 @@ public class BadbookApplication {
     }
 
     @Bean
-    public static DataSource dataSource() {
+    public static DataSource dataSource(@Value("${db.classname}") String classname,
+                                        @Value("${db.url}") String url,
+                                        @Value("${db.username}") String username,
+                                        @Value("${db.password}") String password) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/badbook");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setDriverClassName(classname);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 

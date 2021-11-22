@@ -21,14 +21,14 @@ CREATE TABLE `friends` (
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --Postgres dialect
-CREATE TABLE public.friends
+CREATE TABLE badbook.friends
 (
     id integer NOT NULL,
     friendid integer NOT NULL,
     CONSTRAINT friends_pkey PRIMARY KEY (id, friendid)
 );
 
-CREATE TABLE public.users
+CREATE TABLE badbook.users
 (
     id serial NOT NULL,
     username character varying(256) COLLATE pg_catalog."default" NOT NULL,
