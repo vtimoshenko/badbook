@@ -24,7 +24,7 @@ public class BadbookApplication {
 
     @Bean
     public static DataSource dataSource(@Value("${db.classname}") String classname,
-                                        @Value("#{environment.DATABASE_URL}") String url/*,
+                                        @Value("${db.classname}") String url/*,
                                         /*@Value("${db.username}") String username,
                                         @Value("${db.password}") String password*/) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
