@@ -19,7 +19,7 @@ public class IndexController {
             User current = (User)loggedInUser.getPrincipal();
             model.addAttribute("currentUser", current);
         }
-        return "/index";
+        return "index";
     }
 
 }

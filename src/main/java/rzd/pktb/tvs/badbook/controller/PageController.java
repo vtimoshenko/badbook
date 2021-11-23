@@ -60,9 +60,9 @@ public class PageController {
             Friend friend = new Friend(current.getId(), id);
             if (!friendDAO.existsFriend(friend))
                 friendDAO.save(friend);
-            return "redirect:/page/" + current.getId();
+            return "redirect:page/" + current.getId();
         } else
-            return "redirect:/page/" + id;
+            return "redirect:page/" + id;
     }
 
     @GetMapping("/fromFriends/{id}")
@@ -72,9 +72,9 @@ public class PageController {
             User current = (User)loggedInUser.getPrincipal();
             Friend friend = new Friend(current.getId(), id);
             friendDAO.delete(friend);
-            return "redirect:/page/" + current.getId();
+            return "redirect:page/" + current.getId();
         } else
-            return "redirect:/page/" + id;
+            return "redirect:page/" + id;
     }
 
 }
