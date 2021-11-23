@@ -24,14 +24,14 @@ public class BadbookApplication {
 
     @Bean
     public static DataSource dataSource(@Value("${db.classname}") String classname,
-                                        @Value("${db.classname}") String url/*,
-                                        /*@Value("${db.username}") String username,
-                                        @Value("${db.password}") String password*/) {
+                                        @Value("${db.url}") String url,
+                                        @Value("${db.username}") String username,
+                                        @Value("${db.password}") String password) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(classname);
         dataSource.setUrl(url);
-        /*dataSource.setUsername(username);
-        dataSource.setPassword(password);*/
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 
