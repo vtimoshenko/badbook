@@ -35,6 +35,6 @@ public class RegistrationController {
             bindingResult.addError(new FieldError("user","username", "Пользователь с таким именем уже существует"));
             return "registration";
         }
-        return "redirect:login";
+        return "redirect:/login";
     }
 }
