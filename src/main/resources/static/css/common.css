@@ -1,15 +1,18 @@
 label {
+    color: #555555;
+    font-weight: bold;
+}
+span.labelBox {
     width: 300px;
     text-align: right;
     color: #555555;
     font-weight: bold;
+    display: inline-block;
 }
-
 input {
     width: 300px;
     text-align: left;
 }
-
 span.error {
     color: red;
     width: 600px;

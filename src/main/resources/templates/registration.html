@@ -8,42 +8,43 @@
 <body>
 
 <form th:method="post" th:action="@{/registration}" th:object="${user}">
-    <label for="username">Username:</label>
+    <span class="labelBox"><label for="username">Username:</label></span>
     <input type="text" th:field="*{username}" id="username" name="username"/>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username error</span>
+    <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username error</span>
     <br>
-    <label for="password">Password:</label>
+    <span class="labelBox"><label for="password">Password:</label></span>
     <input type="password" th:field="*{password}" id="password" name="password"/>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
+    <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
     <br>
     <hr>
-    <label for="name">Name:</label>
+    <span class="labelBox"><label for="name">Name:</label></span>
     <input type="text" th:field="*{name}" id="name" name="name"/>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</span>
+    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</span>
     <br>
-    <label for="surname">Surname:</label>
+    <span class="labelBox"><label for="surname">Surname:</label></span>
     <input type="text" th:field="*{surname}" id="surname" name="surname"/>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">surname error</span>
+    <span class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">surname error</span>
     <br>
-    <label for="age">Age:</label>
+    <span class="labelBox"><label for="age">Age:</label></span>
     <input type="text" th:field="*{age}" id="age" name="age"/>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</span>
+    <span class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</span>
     <br>
-    <label for="age">Sex:</label>
+    <span class="labelBox"><label for="age">Sex:</label></span>
     <select th:field="*{sex}" id="sex" name="sex">
         <option value="Man">Man</option>
         <option value="Woman">Woman</option>
     </select>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}">sex error</span>
+    <span class="error" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}">sex error</span>
     <br>
-    <label for="interests">Interests:</label>
+    <span class="labelBox"><label for="interests">Interests:</label></span>
     <input type="text" th:field="*{interests}" id="interests" name="interests"/>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('interests')}" th:errors="*{interests}">interests error</span>
+    <span class="error" th:if="${#fields.hasErrors('interests')}" th:errors="*{interests}">interests error</span>
     <br>
-    <label for="city">City:</label>
+    <span class="labelBox"><label for="city">City:</label></span>
     <input type="text" th:field="*{city}" id="city" name="city"/>
-    <span style="color: red;" class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">city error</span>
+    <span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">city error</span>
     <br>
+    <span class="labelBox"></span>
     <input type="submit" value="Registration!"/>
 </form>
 

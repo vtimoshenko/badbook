@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Список пользователей</title>
+    <title>Поиск пользователей</title>
     <link th:href="@{/css/common.css}" rel="stylesheet"/>
 </head>
 <body>
-<h1 th:if="${userSearch != null}">Поиск</h1>
+<h1>Поиск</h1>
 
-<form th:if="${userSearch != null}" th:method="post" th:action="@{/page/find}" th:object="${userSearch}">
+<form th:method="post" th:action="@{/page/find}" th:object="${userSearch}">
     <span class="labelBox"><label for="name">Name:</label></span>
     <input type="text" th:field="*{name}" id="name" name="name"/>
     <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</span>
@@ -22,19 +22,8 @@
 </form>
 
 <hr>
-<h1>Пользователи</h1>
-
-<div th:each="user : ${users}">
-    <b th:text="${user.getName()}"></b> <b th:text="${user.getSurname()}"></b>
-    <br>
-    <span th:text="${user.getSex()}"></span> <span th:text="${user.getAge()}"></span>
-
-    <a th:href="@{/page/{id}(id=${user.getId()})}">На страницу</a>
-    <a th:href="@{/page/toFriends/{id}(id=${user.getId()})}">В друзья</a>
-</div>
-<hr>
 <a th:href="@{/page/{id}(id=${currentUser.getId()})}">На мою страницу</a><br>
-<a th:href="@{/page/search}">Поиск пользователей</a><br><br><br>
+<a th:href="@{/page}">Все пользователи</a><br><br><br>
 <a href="/logout">Logout</a>
 
 </body>

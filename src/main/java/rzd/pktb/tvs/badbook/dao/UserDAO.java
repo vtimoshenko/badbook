@@ -1,5 +1,7 @@
 package rzd.pktb.tvs.badbook.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rzd.pktb.tvs.badbook.models.Friend;
 import rzd.pktb.tvs.badbook.models.User;
+import rzd.pktb.tvs.badbook.models.UserSearch;
 
 import java.sql.Types;
 import java.util.ArrayList;
@@ -24,6 +27,8 @@ public class UserDAO implements UserDetailsService {
     private String table;
     private final JdbcTemplate jdbcTemplate;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
 
     @Autowired
     public UserDAO(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder bCryptPasswordEncoder, @Value("${db.tables.users}") String table) {
@@ -52,6 +57,12 @@ public class UserDAO implements UserDetailsService {
                 types,
                 new BeanPropertyRowMapper<>(User.class));
 
+        return list;
+    }
+
+    public List<User> list(UserSearch userSearch) {
+        //LOGGER.info("name:" + userSearch.getName() + ", surname:" + userSearch.getSurname() + ", query:" + "SELECT * FROM " + table + " WHERE name LIKE '%" + userSearch.getName() + "' and surname LIKE '%" + userSearch.getSurname() + "'");
+        List<User> list = jdbcTemplate.query("SELECT * FROM " + table + " WHERE name LIKE ? and surname LIKE ? order by id", new Object[]{userSearch.getName() + "%", userSearch.getSurname() + "%"},new int[]{Types.VARCHAR, Types.VARCHAR}, new BeanPropertyRowMapper<>(User.class));
         return list;
     }
 

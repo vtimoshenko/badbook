@@ -20,6 +20,29 @@ CREATE TABLE `friends` (
                            PRIMARY KEY (`id`,`friendid`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `fios` (
+    `name` varchar(256) DEFAULT NULL,
+    `surname` varchar(256) DEFAULT NULL,
+    `username` varchar(256) DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- alter table fios add column username varchar(256);
+
+insert into users (username, password, name, surname, age, sex, interests, city)
+select
+    username,
+    '$2a$10$JKRHyFDm6L/mXyxt0RivweD4l1thY/SXqvXbde0YSPyZOtEpyF3tm' as password,
+    name,
+    surname,
+    (FLOOR( 1 + RAND( ) *60 )) AS age,
+    case
+        when (name like '%а' or name like '%я') and  (surname like '%а' or surname like '%я') then 'Woman'
+        else 'Man'
+        end as sex,
+    '' as interests,
+    '' as city
+from fios;
+
 --Postgres dialect
 CREATE TABLE badbook.friends
 (
