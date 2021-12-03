@@ -26,14 +26,13 @@ public class UserDAO implements UserDetailsService {
 
     private String table;
     private final JdbcTemplate jdbcTemplate;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDAO.class);
 
     @Autowired
-    public UserDAO(JdbcTemplate jdbcTemplate, BCryptPasswordEncoder bCryptPasswordEncoder, @Value("${db.tables.users}") String table) {
+    public UserDAO(JdbcTemplate jdbcTemplate, @Value("${db.tables.users}") String table) {
         this.jdbcTemplate = jdbcTemplate;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.table = table;
     }
 
@@ -71,10 +70,10 @@ public class UserDAO implements UserDetailsService {
         return list.get(0);
     }
 
-    public boolean save(User user) {
+    public boolean save(User user, String encrypted) {
         if (existsUsername(user.getUsername()))
             return false;
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         jdbcTemplate.update("INSERT INTO " + table + " (" +
                 "username, " +
                 "password," +
@@ -86,7 +85,7 @@ public class UserDAO implements UserDetailsService {
                 "city" +
                 ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 user.getUsername(),
-                user.getPassword(),
+                encrypted,
                 user.getName(),
                 user.getSurname(),
                 user.getAge(),

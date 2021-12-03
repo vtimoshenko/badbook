@@ -1,6 +1,7 @@
 package rzd.pktb.tvs.badbook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,9 @@ public class RegistrationController {
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @GetMapping("/registration")
     public String registration(@ModelAttribute("user") User user) {
         return "registration";
@@ -31,7 +35,7 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        if (!userDAO.save(user)){
+        if (!userDAO.save(user, bCryptPasswordEncoder.encode(user.getPassword()))){
             bindingResult.addError(new FieldError("user","username", "Пользователь с таким именем уже существует"));
             return "registration";
         }
